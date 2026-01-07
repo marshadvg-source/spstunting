@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Akun - Sistem Diagnosis Stunting{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Edit Profil Akun</h3>
+            </div>
+            <div class="card-body">
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="nama_pengguna" class="form-label">Nama Pengguna</label>
+                        <input type="text" class="form-control" id="nama_pengguna" name="nama_pengguna" value="{{ pasien.namaPengguna }}" disabled>
+                        <div class="form-text">Nama pengguna tidak dapat diubah</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Nama Balita/Anak</label>
+                        <input type="text" class="form-control" id="nama" name="nama" value="{{ pasien.nama }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="nama_wali" class="form-label">Nama Wali/Orang Tua (Opsional)</label>
+                        <input type="text" class="form-control" id="nama_wali" name="nama_wali" value="{{ pasien.namaWali|default:'' }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="nomor_telepon" class="form-label">Nomor Telepon (Opsional)</label>
+                        <input type="text" class="form-control" id="nomor_telepon" name="nomor_telepon" value="{{ pasien.nomorTelepon|default:'' }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="kata_sandi_baru" class="form-label">Kata Sandi Baru (Biarkan kosong jika tidak ingin mengubah)</label>
+                        <input type="password" class="form-control" id="kata_sandi_baru" name="kata_sandi_baru">
+                        <div class="form-text">Minimal 6 karakter</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Simpan Perubahan</button>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'dashboard_pasien' %}" class="btn btn-secondary">Kembali ke Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

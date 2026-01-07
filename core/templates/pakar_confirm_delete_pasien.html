@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">{{ page_title }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <h5 class="alert-heading">
+                            <i class="bi bi-exclamation-triangle-fill"></i> Konfirmasi Penghapusan
+                        </h5>
+                        <p>Anda akan menghapus data pasien berikut:</p>
+                        
+                        <div class="card bg-light mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ pasien.nama }}</h6>
+                                <p class="card-text mb-1">
+                                    <strong>Nama Pengguna:</strong> {{ pasien.namaPengguna }}
+                                </p>
+                                <p class="card-text mb-1">
+                                    <strong>Jenis Kelamin:</strong> 
+                                    {% if pasien.jenisKelamin == 'L' %}Laki-laki{% else %}Perempuan{% endif %}
+                                </p>
+                                <p class="card-text mb-1">
+                                    <strong>Tanggal Lahir:</strong> {{ pasien.tanggalLahir }}
+                                </p>
+                                {% if pasien.namaWali %}
+                                <p class="card-text mb-1">
+                                    <strong>Nama Wali:</strong> {{ pasien.namaWali }}
+                                </p>
+                                {% endif %}
+                                {% if pasien.nomorTelepon %}
+                                <p class="card-text mb-0">
+                                    <strong>Nomor Telepon:</strong> {{ pasien.nomorTelepon }}
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <p class="mb-0"><strong>Peringatan:</strong> Tindakan ini tidak dapat dibatalkan. Semua data terkait pasien ini akan dihapus secara permanen, termasuk riwayat konsultasi dan pengukuran.</p>
+                    </div>
+                    
+                    <form method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Ya, Hapus Pasien
+                        </button>
+                        <a href="{% url 'list_patients_pakar' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Batal
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

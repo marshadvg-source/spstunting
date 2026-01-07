@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">{{ page_title }}</h4>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nama" class="form-label">Nama Lengkap *</label>
+                                <input type="text" class="form-control" id="nama" name="nama" value="{{ pasien.nama|default:'' }}" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="nama_pengguna" class="form-label">Nama Pengguna {% if not pasien %}*{% endif %}</label>
+                                <input type="text" class="form-control" id="nama_pengguna" name="nama_pengguna" value="{{ pasien.namaPengguna|default:'' }}" {% if not pasien %}required{% endif %} {% if pasien %}readonly{% endif %}>
+                                {% if pasien %}
+                                <div class="form-text">Nama pengguna tidak dapat diubah setelah dibuat</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin *</label>
+                                <select class="form-select" id="jenis_kelamin" name="jenis_kelamin" required>
+                                    <option value="">Pilih Jenis Kelamin</option>
+                                    <option value="L" {% if pasien.jenisKelamin == 'L' %}selected{% endif %}>Laki-laki</option>
+                                    <option value="P" {% if pasien.jenisKelamin == 'P' %}selected{% endif %}>Perempuan</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="tanggal_lahir" class="form-label">Tanggal Lahir *</label>
+                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ pasien.tanggalLahir|date:'Y-m-d'|default:'' }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="nama_wali" class="form-label">Nama Wali/Orang Tua</label>
+                            <input type="text" class="form-control" id="nama_wali" name="nama_wali" value="{{ pasien.namaWali|default:'' }}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="nomor_telepon" class="form-label">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="nomor_telepon" name="nomor_telepon" value="{{ pasien.nomorTelepon|default:'' }}">
+                        </div>
+                        
+                        {% if not pasien %}
+                        <div class="mb-3">
+                            <label for="kata_sandi" class="form-label">Kata Sandi *</label>
+                            <input type="password" class="form-control" id="kata_sandi" name="kata_sandi" required>
+                            <div class="form-text">Minimal 6 karakter</div>
+                        </div>
+                        {% else %}
+                        <div class="mb-3">
+                            <label for="kata_sandi_baru" class="form-label">Kata Sandi Baru</label>
+                            <input type="password" class="form-control" id="kata_sandi_baru" name="kata_sandi_baru">
+                            <div class="form-text">Biarkan kosong jika tidak ingin mengubah kata sandi</div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'list_patients_pakar' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save"></i> Simpan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

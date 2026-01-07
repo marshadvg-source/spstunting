@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %}Cara Menggunakan Sistem - Panel Pakar{% endblock %}
+
+{% block content %}
+{% comment %} Header is defined in base.html and populated via context variables {% endcomment %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Panduan Penggunaan Sistem Pakar Diagnosis Stunting</h5>
+            </div>
+            <div class="card-body">
+                <p class="lead">Berikut adalah panduan langkah demi langkah untuk menggunakan sistem pakar diagnosis stunting:</p>
+                
+                <div class="accordion" id="helpAccordion">
+                    <!-- Step 1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <span class="badge bg-primary me-2">1</span> Menambah Gejala Baru
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <ol>
+                                    <li>Akses menu "Manajemen Basis Pengetahuan" di sidebar.</li>
+                                    <li>Pilih submenu "Daftar Gejala".</li>
+                                    <li>Klik tombol "Tambah Gejala Baru".</li>
+                                    <li>Isi formulir dengan:
+                                        <ul>
+                                            <li><strong>Kode Gejala</strong>: Kode unik untuk gejala (misal: G001)</li>
+                                            <li><strong>Nama Gejala</strong>: Nama/deskripsi gejala yang jelas</li>
+                                            <li><strong>Bobot Gejala</strong>: Nilai bobot antara 0.1-1.0</li>
+                                        </ul>
+                                    </li>
+                                    <li>Klik "Simpan" untuk menambahkan gejala ke basis pengetahuan.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <span class="badge bg-primary me-2">2</span> Menambah Kondisi Baru
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <ol>
+                                    <li>Akses menu "Manajemen Basis Pengetahuan" di sidebar.</li>
+                                    <li>Pilih submenu "Daftar Kondisi".</li>
+                                    <li>Klik tombol "Tambah Kondisi Baru".</li>
+                                    <li>Isi formulir dengan:
+                                        <ul>
+                                            <li><strong>Kode Kondisi</strong>: Kode unik untuk kondisi (misal: K001)</li>
+                                            <li><strong>Nama Kondisi</strong>: Nama/deskripsi kondisi yang jelas</li>
+                                            <li><strong>Deskripsi</strong>: Penjelasan detail tentang kondisi</li>
+                                            <li><strong>Solusi</strong>: Rekomendasi penanganan untuk kondisi tersebut</li>
+                                        </ul>
+                                    </li>
+                                    <li>Klik "Simpan" untuk menambahkan kondisi ke basis pengetahuan.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <span class="badge bg-primary me-2">3</span> Membuat Aturan Diagnosis Baru
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <ol>
+                                    <li>Akses menu "Manajemen Basis Pengetahuan" di sidebar.</li>
+                                    <li>Pilih submenu "Daftar Aturan".</li>
+                                    <li>Klik tombol "Tambah Aturan Baru".</li>
+                                    <li>Isi formulir dengan:
+                                        <ul>
+                                            <li><strong>Kode Kelompok Aturan</strong>: Kode unik untuk kelompok aturan (misal: R001)</li>
+                                            <li><strong>Pilih Kondisi</strong>: Pilih kondisi yang akan didiagnosis</li>
+                                            <li><strong>Pilih Gejala</strong>: Pilih satu atau lebih gejala yang mendukung diagnosis</li>
+                                        </ul>
+                                    </li>
+                                    <li>Klik "Simpan" untuk membuat aturan diagnosis baru.</li>
+                                </ol>
+                                <div class="alert alert-info mt-3">
+                                    <strong>Tip:</strong> Satu kondisi bisa memiliki beberapa aturan dengan kombinasi gejala yang berbeda untuk meningkatkan akurasi diagnosis.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                <span class="badge bg-primary me-2">4</span> Memantau Data Pasien
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <ol>
+                                    <li>Akses menu "Data Pasien" di sidebar.</li>
+                                    <li>Pilih submenu "Daftar Pasien".</li>
+                                    <li>Anda akan melihat daftar semua pasien yang terdaftar di sistem.</li>
+                                    <li>Klik nama pasien untuk melihat detail profil dan riwayat konsultasi.</li>
+                                    <li>Untuk melihat hasil diagnosis spesifik, pilih tab "Riwayat Konsultasi".</li>
+                                </ol>
+                                <div class="alert alert-warning mt-3">
+                                    <strong>Privasi:</strong> Pastikan untuk menjaga kerahasiaan data pasien sesuai dengan regulasi yang berlaku.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 5 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                <span class="badge bg-primary me-2">5</span> Melihat Statistik Sistem
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <ol>
+                                    <li>Akses Dashboard Pakar dari menu utama.</li>
+                                    <li>Lihat ringkasan statistik di bagian atas halaman:
+                                        <ul>
+                                            <li><strong>Total Pasien</strong>: Jumlah pasien yang terdaftar</li>
+                                            <li><strong>Total Konsultasi</strong>: Jumlah konsultasi yang telah dilakukan</li>
+                                            <li><strong>Total Gejala</strong>: Jumlah gejala dalam basis pengetahuan</li>
+                                            <li><strong>Total Kondisi</strong>: Jumlah kondisi dalam basis pengetahuan</li>
+                                            <li><strong>Total Aturan</strong>: Jumlah aturan diagnosis yang tersedia</li>
+                                        </ul>
+                                    </li>
+                                    <li>Gunakan statistik ini untuk memantau aktivitas dan perkembangan sistem.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Tips dan Best Practices</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Kelola Basis Pengetahuan</h6>
+                        <ul>
+                            <li>Perbarui basis pengetahuan secara berkala dengan gejala dan kondisi baru</li>
+                            <li>Pastikan deskripsi gejala dan kondisi jelas dan mudah dipahami</li>
+                            <li>Gunakan bobot gejala yang sesuai dengan tingkat kepentingannya</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Pantau Aktivitas Sistem</h6>
+                        <ul>
+                            <li>Periksa statistik sistem secara rutin</li>
+                            <li>Pantau pola diagnosis untuk mengidentifikasi kebutuhan peningkatan</li>
+                            <li>Evaluasi efektivitas aturan diagnosis berdasarkan hasil nyata</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

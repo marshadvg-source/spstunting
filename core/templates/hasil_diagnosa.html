@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Hasil Diagnosis - Sistem Diagnosis Stunting{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Hasil Diagnosis</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard_pasien' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'form_diagnosa' %}">Diagnosis Stunting</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Hasil Diagnosis</li>
+            </ol>
+        </nav>
+        
+        {% if error %}
+        <div class="alert alert-warning">
+            <strong>Perhatian:</strong> {{ error }}
+        </div>
+        {% endif %}
+        
+        {% if kondisi %}
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0">Hasil Diagnosis: {{ kondisi.namaKondisi }}</h3>
+            </div>
+            <div class="card-body">
+                {% if diagnosis_parsial %}
+                <div class="alert alert-warning">
+                    <strong>Diagnosis Parsial:</strong> Berikut adalah kondisi yang paling cocok berdasarkan gejala yang Anda pilih. Hasil ini merupakan perkiraan berdasarkan kecocokan parsial.
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <strong>Diagnosis Berhasil!</strong> Berikut adalah hasil diagnosis berdasarkan gejala yang Anda pilih.
+                </div>
+                {% endif %}
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Deskripsi</h5>
+                        <p>{{ kondisi.deskripsi }}</p>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <h5>Solusi</h5>
+                        <p>{{ kondisi.solusi }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="card mb-4">
+            <div class="card-header bg-warning text-dark">
+                <h3 class="mb-0">Hasil Diagnosis: Tidak Ditemukan</h3>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <strong>Informasi:</strong> Berdasarkan gejala yang Anda pilih, sistem tidak dapat menemukan pola yang cocok dengan kondisi stunting yang diketahui. Silakan konsultasi dengan tenaga kesehatan untuk evaluasi lebih lanjut.
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="card">
+            <div class="card-header">
+                <h5>Informasi Tambahan</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Tanggal Konsultasi:</strong> {{ konsultasi.tanggalKonsultasi }}</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p><strong>ID Konsultasi:</strong> #{{ konsultasi.id }}</p>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <a href="{% url 'preview_diagnosa' %}" class="btn btn-info"><i class="fas fa-file-pdf"></i> Lihat Preview Laporan Diagnosis</a>
+                    <a href="{% url 'dashboard_pasien' %}" class="btn btn-primary">Kembali ke Dashboard</a>
+                    <a href="{% url 'form_diagnosa' %}" class="btn btn-outline-secondary">Diagnosis Ulang</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

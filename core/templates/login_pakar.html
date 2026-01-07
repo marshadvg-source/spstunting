@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Pakar - Sistem Diagnosis Stunting</title>
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body class="expert-login-body">
+    <div class="login-container row g-0">
+        <!-- Left Column - Illustration -->
+        <div class="col-md-6 d-none d-md-block login-left">
+            <div class="illustration">
+                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="currentColor" class="bi bi-shield-lock" viewBox="0 0 16 16">
+                    <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.697-.2-1.539-.39-2.837-.856C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.615z"/>
+                    <path d="M8 4.5c0 .552-.448 1-1 1s-1-.448-1-1 .448-1 1-1 1 .448 1 1z"/>
+                    <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                </svg>
+            </div>
+            <h2 class="welcome-text">Panel Pakar Diagnosis</h2>
+            <p class="subtitle">Akses eksklusif untuk tenaga medis profesional</p>
+            <p>Sistem ini dirancang khusus untuk membantu tenaga kesehatan dalam melakukan diagnosis stunting pada balita dengan akurasi tinggi.</p>
+        </div>
+        
+        <!-- Right Column - Login Form -->
+        <div class="col-md-6 login-right">
+            <div class="text-center mb-4">
+                <h1 class="logo">Sistem Diagnosis Stunting</h1>
+                <p class="tagline">Deteksi Dini, Pencegahan Lebih Baik</p>
+            </div>
+            
+            <h3 class="mb-4">Login Pakar</h3>
+            
+            {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-login text-white">Masuk sebagai Pakar</button>
+            </form>
+            
+            <div class="text-center mt-4">
+                <a href="{% url 'home' %}" class="text-decoration-none">&larr; Kembali ke Beranda</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

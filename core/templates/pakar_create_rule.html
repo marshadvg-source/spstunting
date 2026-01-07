@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Buat Kelompok Aturan - Panel Pakar{% endblock %}
+
+{% block content %}
+{% comment %} Header is defined in base.html and populated via context variables {% endcomment %}
+<div class="row">
+    <div class="col-md-12">
+        
+        <div class="card">
+            <div class="card-header">
+                <h5>Form Kelompok Aturan</h5>
+            </div>
+            <div class="card-body">
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="kondisi" class="form-label">Kondisi Tujuan</label>
+                        <select class="form-select" id="kondisi" name="kondisi" required>
+                            <option value="">Pilih Kondisi</option>
+                            {% for kondisi in kondisi_list %}
+                            <option value="{{ kondisi.kodeKondisi }}">{{ kondisi.kodeKondisi }} - {{ kondisi.namaKondisi }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="kode_kelompok" class="form-label">Kode Kelompok Aturan</label>
+                        <input type="text" class="form-control" id="kode_kelompok" name="kode_kelompok" placeholder="Misal: R01, R02, dll." required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Gejala yang Dibutuhkan</label>
+                        <div class="border rounded p-3" style="max-height: 300px; overflow-y: auto;">
+                            {% for gejala in gejala_list %}
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="gejala_{{ gejala.kodeGejala }}" name="gejala" value="{{ gejala.kodeGejala }}">
+                                <label class="form-check-label" for="gejala_{{ gejala.kodeGejala }}">
+                                    {{ gejala.kodeGejala }} - {{ gejala.namaGejala }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Buat Kelompok Aturan</button>
+                    <a href="{% url 'list_rules_pakar' %}" class="btn btn-secondary">Batal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

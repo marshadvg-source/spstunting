@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}Daftar Notifikasi{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Notifikasi Anda</h2>
+    
+    {% if notifikasi_list %}
+        <div class="list-group">
+            {% for notifikasi in notifikasi_list %}
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ notifikasi.judul }}</h5>
+                        <small>{{ notifikasi.jadwalNotifikasi|date:"d M Y H:i" }}</small>
+                    </div>
+                    <p class="mb-1">{{ notifikasi.pesan }}</p>
+                    <small class="badge {% if notifikasi.sudahTerkirim %}bg-success{% else %}bg-warning{% endif %}">
+                        {% if notifikasi.sudahTerkirim %}Terkirim{% else %}Menunggu{% endif %}
+                    </small>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <h4>Tidak ada notifikasi</h4>
+            <p>Belum ada notifikasi untuk Anda saat ini.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

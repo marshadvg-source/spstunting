@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Riwayat Pengukuran - {{ pasien.nama }}</title>
+    <style>
+        @page { size: A4; margin: 1cm; }
+        body { font-family: Helvetica; font-size: 10pt; }
+        .header { text-align: center; border-bottom: 2px solid #000; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; table-layout: fixed; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: center; word-wrap: break-word; }
+        th { background-color: #f2f2f2; }
+        .info-table { border: none; margin-bottom: 20px; }
+        .info-table td { border: none; text-align: left; padding: 2px; }
+        .data-table th:nth-child(1), .data-table td:nth-child(1) { width: 5%; }
+        .data-table th:nth-child(2), .data-table td:nth-child(2) { width: 25%; }
+        .data-table th:nth-child(3), .data-table td:nth-child(3) { width: 12%; }
+        .data-table th:nth-child(4), .data-table td:nth-child(4) { width: 12%; }
+        .data-table th:nth-child(5), .data-table td:nth-child(5) { width: 12%; }
+        .data-table th:nth-child(6), .data-table td:nth-child(6) { width: 12%; }
+        .data-table th:nth-child(7), .data-table td:nth-child(7) { width: 24%; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>LAPORAN RIWAYAT PENGUKURAN PERTUMBUHAN</h1>
+        <h2>Sistem Diagnosis Stunting</h2>
+    </div>
+    
+    <table class="info-table">
+        <tr>
+            <td><strong>Nama Anak:</strong> {{ pasien.nama }}</td>
+            <td><strong>Tanggal Lahir:</strong> {{ pasien.tanggalLahir|date:"d/m/Y" }}</td>
+        </tr>
+        <tr>
+            <td><strong>Jenis Kelamin:</strong> {{ pasien.get_jenisKelamin_display }}</td>
+            <td><strong>Usia Saat Ini:</strong> {{ pasien.usia_sekarang }} bulan</td>
+        </tr>
+        <tr>
+            <td><strong>Nama Orang Tua:</strong> {{ pasien.namaWali }}</td>
+            <td><strong>Tanggal Cetak:</strong> {% now "d/m/Y" %}</td>
+        </tr>
+    </table>
+    
+    {% if pengukuran_list %}
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Tanggal Pengukuran</th>
+                    <th>Berat Badan (kg)</th>
+                    <th>Tinggi Badan (cm)</th>
+                    <th>Z-Score BB/U</th>
+                    <th>Z-Score TB/U</th>
+                    <th>Status Gizi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pengukuran in pengukuran_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ pengukuran.tanggalUkur|date:"d/m/Y" }}</td>
+                    <td>{{ pengukuran.beratBadan }}</td>
+                    <td>{{ pengukuran.tinggiBadan }}</td>
+                    <td>
+                        {% if pengukuran.skor_Z_BB_U %}
+                            {{ pengukuran.skor_Z_BB_U|floatformat:2 }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if pengukuran.skor_Z_TB_U %}
+                            {{ pengukuran.skor_Z_TB_U|floatformat:2 }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if pengukuran.skor_Z_BB_U and pengukuran.skor_Z_TB_U %}
+                            {% if pengukuran.skor_Z_BB_U > -2 and pengukuran.skor_Z_TB_U > -2 %}
+                                Normal
+                            {% elif pengukuran.skor_Z_BB_U <= -2 or pengukuran.skor_Z_TB_U <= -2 %}
+                                Risiko Stunting
+                            {% elif pengukuran.skor_Z_BB_U <= -3 or pengukuran.skor_Z_TB_U <= -3 %}
+                                Stunting
+                            {% endif %}
+                        {% else %}
+                            Belum Dihitung
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="no-data">
+            <p>Tidak ada data pengukuran tersedia.</p>
+        </div>
+    {% endif %}
+    
+    <table style="width: 300px; margin-left: auto; border: none; margin-top: 40px;">
+        <tr>
+            <td style="border: none; text-align: center; padding: 40px 10px 10px 10px;">Mengetahui,<br><br><br><br><br>(___________________________)</td>
+        </tr>
+    </table>
+    
+    <div style="text-align: center; font-size: 8pt; border-top: 1px solid #000; padding-top: 5px; margin-top: 20px;">
+        Dicetak pada {% now "d/m/Y H:i" %}
+    </div>
+</body>
+</html>

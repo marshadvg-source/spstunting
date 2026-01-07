@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Konfirmasi Penghapusan Data Aturan</h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Apakah Anda yakin ingin menghapus <strong>SEMUA</strong> Aturan yang terkait dengan Kondisi <strong>{{ kondisi.namaKondisi }}</strong>?</p>
+                    <p>Terdapat <strong>{{ aturan_count }}</strong> aturan yang akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.</p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-end mt-4">
+                            <a href="{% url 'list_rules_pakar' %}" class="btn btn-secondary me-2">Batal</a>
+                            <button type="submit" class="btn btn-danger">Ya, Hapus Permanen</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Redirecting...{% endblock %}
+
+{% block content %}
+<script>
+    window.location.href = "{% url 'riwayat_list' %}";
+</script>
+<div class="text-center mt-5">
+    <p>Redirecting to measurement history...</p>
+    <a href="{% url 'riwayat_list' %}" class="btn btn-primary">Click here if you are not redirected</a>
+</div>
+{% endblock %}

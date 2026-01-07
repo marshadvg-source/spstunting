@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistem Diagnosis Stunting{% endblock %}</title>
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+         <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Sistem Diagnosis Stunting</a>
+
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <!-- Role-based navigation will be added here -->
+                </ul>
+
+                <!-- Right-aligned items -->
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated and user.is_staff and not user.is_superuser %}
+                    <!-- Expert Navigation - Direct Links -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard_pakar' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'list_patients_pakar' %}">Daftar Pasien</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'list_rules_pakar' %}">Daftar Aturan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'list_gejala_pakar' %}">Gejala</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'list_kondisi_pakar' %}">Kondisi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'pakar_help' %}">Cara Penggunaan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="{% url 'daftar_notifikasi' %}">
+                            <i class="fas fa-bell"></i>
+                            {% if notif_count > 0 %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ notif_count }}
+                                <span class="visually-hidden">unread notifications</span>
+                            </span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout_pakar' %}">Logout Pakar</a>
+                    </li>
+                    {% elif user.is_authenticated and user.is_superuser %}
+                    <!-- Admin Navigation - Redirect to Django Admin -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index' %}">Admin Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:logout' %}">Logout Admin</a>
+                    </li>
+                    {% elif 'pasien_id' in request.session %}
+                    <!-- Patient Navigation -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard_pasien' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'input_pengukuran' %}">Input Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'riwayat_pengukuran' %}">Riwayat (Tabel)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'form_diagnosa' %}">Diagnosis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'tampilkan_grafik_riwayat' pasien_id=request.session.pasien_id %}">Grafik</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="{% url 'daftar_notifikasi' %}">
+                            <i class="fas fa-bell"></i> Notifikasi
+                            {% if notif_count > 0 %}
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ notif_count }}
+                                <span class="visually-hidden">unread notifications</span>
+                            </span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout_pasien' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <!-- Guest Navigation -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_pasien' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'registrasi_pasien' %}">Registrasi</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5 pt-4">
+        {% block header %}
+        {% if page_title %}
+
+        {% if breadcrumb_items %}
+        <div class="breadcrumb-card">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    {% for item in breadcrumb_items %}
+                    {% if item.1 %}
+                    {% if not forloop.last %}
+                    <li class="breadcrumb-item"><a href="{% url item.1 %}">{{ item.0 }}</a></li>
+                    {% else %}
+                    <li class="breadcrumb-item active" aria-current="page">{{ item.0 }}</li>
+                    {% endif %}
+                    {% else %}
+                    <li class="breadcrumb-item active" aria-current="page">{{ item.0 }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ol>
+            </nav>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% endblock %}
+
+        {% block content %}
+        <!-- Page content will be placed here -->
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-light mt-5">
+        <div class="container text-center py-4">
+            <span class="text-muted">© 2025 Sistem Diagnosis Stunting. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

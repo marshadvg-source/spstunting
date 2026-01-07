@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hasil Diagnosis - {{ konsultasi.pasien.nama }}</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2.5cm 1.5cm;
+            @frame header_frame {
+                -pdf-frame-content: headerContent;
+                left: 50pt; width: 512pt; top: 50pt; height: 40pt;
+            }
+            @frame content_frame {
+                left: 50pt; width: 512pt; top: 90pt; height: 632pt;
+            }
+            @frame footer_frame {
+                -pdf-frame-content: footerContent;
+                left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+            }
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        
+        .header h2 {
+            margin: 5px 0 0 0;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .document-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 20px 0;
+            text-decoration: underline;
+        }
+        
+        .patient-info {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        
+        .patient-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .patient-info td {
+            padding: 5px;
+        }
+        
+        .patient-info .label {
+            font-weight: bold;
+            width: 30%;
+        }
+        
+        .diagnosis-result {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .diagnosis-result h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+        
+        .status-normal {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        
+        .status-risk {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeaa7;
+        }
+        
+        .status-stunting {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        
+        .recommendations {
+            margin: 20px 0;
+        }
+        
+        .recommendations h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+        
+        .recommendations ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .recommendations li {
+            margin-bottom: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+        
+        .signature {
+            margin-top: 40px;
+            text-align: right;
+        }
+        
+        .signature-table {
+            width: 300px;
+            margin-left: auto;
+        }
+        
+        .signature-table td {
+            padding: 40px 10px 10px 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="headerContent" class="header">
+        <h1>SURAT KETERANGAN HASIL DIAGNOSIS STUNTING</h1>
+        <h2>Sistem Diagnosis Stunting</h2>
+    </div>
+    
+    <div class="document-title">SURAT KETERANGAN</div>
+    
+    <div class="patient-info">
+        <table>
+            <tr>
+                <td class="label">Nama Anak:</td>
+                <td>{{ konsultasi.pasien.nama }}</td>
+                <td class="label">Tanggal Lahir:</td>
+                <td>{{ konsultasi.pasien.tanggalLahir|date:"d/m/Y" }}</td>
+            </tr>
+            <tr>
+                <td class="label">Jenis Kelamin:</td>
+                <td>{{ konsultasi.pasien.get_jenisKelamin_display }}</td>
+                <td class="label">Usia:</td>
+                <td>{{ konsultasi.pasien.usia_sekarang }} bulan</td>
+            </tr>
+            <tr>
+                <td class="label">Nama Orang Tua:</td>
+                <td>{{ konsultasi.pasien.namaWali }}</td>
+                <td class="label">Tanggal Diagnosis:</td>
+                <td>{{ konsultasi.tanggalKonsultasi|date:"d/m/Y" }}</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="diagnosis-result {% if konsultasi.hasilDiagnosis == 'Normal' %}status-normal{% elif konsultasi.hasilDiagnosis == 'Risiko Stunting' %}status-risk{% else %}status-stunting{% endif %}">
+        <h3>HASIL DIAGNOSIS</h3>
+        <div style="font-size: 20px; font-weight: bold;">
+            {{ konsultasi.hasilDiagnosis }}
+        </div>
+        <div style="margin-top: 10px;">
+            Berdasarkan hasil analisis sistem pakar, kondisi pertumbuhan anak saat ini adalah <strong>{{ konsultasi.hasilKondisi.namaKondisi }}</strong>.
+        </div>
+    </div>
+    
+    <div class="recommendations">
+        <h4>REKOMENDASI</h4>
+        <ul>
+            {% if konsultasi.hasilDiagnosis == 'Normal' %}
+                <li>Pertahankan pola asuh dan asupan gizi yang baik</li>
+                <li>Lanjutkan pemberian ASI eksklusif sampai usia 6 bulan</li>
+                <li>Berikan MP-ASI yang bergizi seimbang mulai usia 6 bulan</li>
+                <li>Jaga kebersihan dan lakukan stimulasi tumbuh kembang secara rutin</li>
+                <li>Lakukan pengukuran pertumbuhan secara berkala setiap bulan</li>
+            {% elif konsultasi.hasilDiagnosis == 'Risiko Stunting' %}
+                <li>Segera konsultasikan dengan tenaga kesehatan terdekat</li>
+                <li>Tingkatkan frekuensi dan kualitas pemberian makan</li>
+                <li>Berikan suplemen gizi sesuai anjuran dokter</li>
+                <li>Pastikan anak mendapat ASI eksklusif dan MP-ASI yang cukup</li>
+                <li>Pantau pertumbuhan anak secara intensif setiap 2 minggu sekali</li>
+            {% else %}
+                <li>Segera bawa anak ke fasilitas kesehatan untuk penanganan lebih lanjut</li>
+                <li>Ikuti program intervensi gizi khusus dari tenaga kesehatan</li>
+                <li>Berikan makanan tambahan dengan kualitas dan kuantitas yang lebih tinggi</li>
+                <li>Pastikan anak mendapat suplemen gizi dan vitamin sesuai rekomendasi</li>
+                <li>Lakukan monitoring tumbuh kembang secara ketat bersama tenaga kesehatan</li>
+            {% endif %}
+        </ul>
+    </div>
+    
+    <div class="recommendations">
+        <h4>CATATAN MEDIS</h4>
+        <p>{{ konsultasi.catatan }}</p>
+    </div>
+    
+    <div class="signature">
+        <table class="signature-table">
+            <tr>
+                <td>Dokter/Petugas Kesehatan,<br><br><br><br><br>(___________________________)</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div id="footerContent" class="footer">
+        Dicetak pada {% now "d/m/Y H:i" %} | Halaman <pdf:pagenumber>
+    </div>
+</body>
+</html>

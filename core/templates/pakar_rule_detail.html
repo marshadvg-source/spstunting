@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail Aturan - Panel Pakar{% endblock %}
+
+{% block content %}
+{% comment %} Header is defined in base.html and populated via context variables {% endcomment %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Kondisi Terdiagnosis: {{ kondisi.kodeKondisi }} - {{ kondisi.namaKondisi }}</h5>
+    </div>
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h6>Deskripsi Kondisi:</h6>
+                <p>{{ kondisi.deskripsi }}</p>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h6>Rekomendasi/Solusi:</h6>
+                <p>{{ kondisi.solusi }}</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <h6>Daftar Gejala yang Membentuk Aturan:</h6>
+                {% if aturan_kelompok %}
+                    {% for kode_kelompok, aturan_list in aturan_kelompok.items %}
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0">Kelompok Aturan: {{ kode_kelompok }}</h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                {% for aturan in aturan_list %}
+                                <li class="list-group-item">
+                                    <strong>{{ aturan.gejala.kodeGejala }}</strong> - {{ aturan.gejala.namaGejala }}
+                                    <span class="badge bg-secondary float-end">Bobot: {{ aturan.gejala.bobotGejala }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info">
+                        <p class="mb-0">Tidak ada gejala yang terkait dengan kondisi ini.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'list_rules_pakar' %}" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left me-1" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                </svg>
+                Kembali ke Daftar Aturan
+            </a>
+            <a href="#" class="btn btn-primary disabled" title="Fitur akan dikembangkan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil me-1" viewBox="0 0 16 16">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.5 1.5 11.5 3.5 12.5l6.5-6.5z"/>
+                </svg>
+                Edit Aturan
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

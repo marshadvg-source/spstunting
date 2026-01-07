@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">{{ page_title }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <h5 class="alert-heading">
+                            <i class="bi bi-exclamation-triangle-fill"></i> Konfirmasi Penghapusan
+                        </h5>
+                        <p>Anda akan menghapus data pengukuran berikut:</p>
+                        
+                        <div class="card bg-light mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Pengukuran untuk {{ pengukuran.pasien.nama }}</h6>
+                                <p class="card-text mb-1">
+                                    <strong>Tanggal Ukur:</strong> {{ pengukuran.tanggalUkur }}
+                                </p>
+                                <p class="card-text mb-1">
+                                    <strong>Berat Badan:</strong> {{ pengukuran.beratBadan }} kg
+                                </p>
+                                <p class="card-text mb-1">
+                                    <strong>Tinggi Badan:</strong> {{ pengukuran.tinggiBadan }} cm
+                                </p>
+                                {% if pengukuran.lingkarKepala %}
+                                <p class="card-text mb-1">
+                                    <strong>Lingkar Kepala:</strong> {{ pengukuran.lingkarKepala }} cm
+                                </p>
+                                {% endif %}
+                                {% if pengukuran.lingkarLengan %}
+                                <p class="card-text mb-1">
+                                    <strong>Lingkar Lengan:</strong> {{ pengukuran.lingkarLengan }} cm
+                                </p>
+                                {% endif %}
+                                {% if pengukuran.imunisasi %}
+                                <p class="card-text mb-0">
+                                    <strong>Status Imunisasi:</strong> {{ pengukuran.imunisasi }}
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <p class="mb-0"><strong>Peringatan:</strong> Tindakan ini tidak dapat dibatalkan. Data pengukuran ini akan dihapus secara permanen.</p>
+                    </div>
+                    
+                    <form method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Ya, Hapus Pengukuran
+                        </button>
+                        <a href="{% url 'list_pengukuran_pakar' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Batal
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

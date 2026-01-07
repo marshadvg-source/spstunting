@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Daftar Aturan - Panel Pakar{% endblock %}
+
+{% block content %}
+{% comment %} Header is defined in base.html and populated via context variables {% endcomment %}
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Daftar Aturan Diagnosis</h5>
+        <a href="{% url 'create_rule_group' %}" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle me-1" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+            Tambah Aturan Baru
+        </a>
+    </div>
+    <div class="card-body">
+        {% if aturan_kelompok %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Kode Kelompok Aturan</th>
+                        <th>Kondisi Terdiagnosis</th>
+                        <th>Gejala Pertama</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, aturan_list in aturan_kelompok.items %}
+                    <tr>
+                        <td>{{ key.0 }}</td>
+                        <td>{{ key.1.kodeKondisi }} - {{ key.1.namaKondisi }}</td>
+                        <td>
+                            {% if aturan_list %}
+                                {{ aturan_list.0.gejala.kodeGejala }} - {{ aturan_list.0.gejala.namaGejala }}
+                            {% else %}
+                                Tidak ada gejala
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                {% if key.1.kodeKondisi %}
+                                <a href="{% url 'edit_rule_pakar' key.1.kodeKondisi %}" class="btn btn-sm btn-outline-primary" title="Edit Aturan">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.5 1.5 11.5 3.5 12.5l6.5-6.5z"/>
+                                    </svg>
+                                    Edit
+                                </a>
+                                <a href="{% url 'delete_rule_pakar' key.1.kodeKondisi %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus semua aturan yang terkait dengan kondisi ini?')" title="Hapus Aturan">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                    </svg>
+                                    Hapus
+                                </a>
+                                <a href="{% url 'show_rule_detail' key.1.kodeKondisi %}" class="btn btn-sm btn-outline-info">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                                    </svg>
+                                    Detail
+                                </a>
+                                {% else %}
+                                <button class="btn btn-sm btn-outline-primary" disabled>Edit</button>
+                                <button class="btn btn-sm btn-outline-danger" disabled>Hapus</button>
+                                <button class="btn btn-sm btn-outline-info" disabled>Detail</button>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">Tidak ada aturan yang tersedia</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center">
+            <h5>Tidak ada aturan yang tersedia</h5>
+            <p>Belum ada aturan diagnosis yang dibuat. Silakan tambahkan aturan baru.</p>
+            <a href="{% url 'create_rule_group' %}" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle me-1" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+                Buat Aturan Baru
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

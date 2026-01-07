@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}Riwayat Pengukuran{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Riwayat Pengukuran</h2>
+        <div>
+            <a href="{% url 'cetak_riwayat_pdf' %}" class="btn btn-danger mr-2">
+                <i class="fas fa-file-pdf"></i> Cetak Laporan
+            </a>
+            <a href="{% url 'input_pengukuran' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Input Pengukuran Baru
+            </a>
+        </div>
+    </div>
+    
+    {% if pengukuran_list %}
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Tabel Perkembangan Anak</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Tanggal Pengukuran</th>
+                                <th>Berat Badan (kg)</th>
+                                <th>Tinggi Badan (cm)</th>
+                                <th>Umur (bulan)</th>
+                                <th>Z-Score BB/U</th>
+                                <th>Z-Score TB/U</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pengukuran in pengukuran_list %}
+                            <tr>
+                                <td>{{ pengukuran.tanggalUkur|date:"d/m/Y" }}</td>
+                                <td>{{ pengukuran.beratBadan }}</td>
+                                <td>{{ pengukuran.tinggiBadan }}</td>
+                                <td>{{ pengukuran.umur_bulan }}</td>
+                                <td>
+                                    {% if pengukuran.skor_Z_BB_U %}
+                                        {{ pengukuran.skor_Z_BB_U|floatformat:2 }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if pengukuran.skor_Z_TB_U %}
+                                        {{ pengukuran.skor_Z_TB_U|floatformat:2 }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if pengukuran.skor_Z_BB_U and pengukuran.skor_Z_TB_U %}
+                                        {% if pengukuran.skor_Z_BB_U > -2 and pengukuran.skor_Z_TB_U > -2 %}
+                                            <span class="badge bg-success">Normal</span>
+                                        {% elif pengukuran.skor_Z_BB_U <= -2 or pengukuran.skor_Z_TB_U <= -2 %}
+                                            <span class="badge bg-warning">Risiko Stunting</span>
+                                        {% elif pengukuran.skor_Z_BB_U <= -3 or pengukuran.skor_Z_TB_U <= -3 %}
+                                            <span class="badge bg-danger">Stunting</span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="badge bg-secondary">Belum Dihitung</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            <h4>Belum Ada Data Pengukuran</h4>
+            <p>Anda belum memiliki riwayat pengukuran. Silakan input data pengukuran pertama Anda.</p>
+            <a href="{% url 'input_pengukuran' %}" class="btn btn-primary">Input Pengukuran Sekarang</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

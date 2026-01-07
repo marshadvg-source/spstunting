@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard Pasien - Sistem Diagnosis Stunting{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Dashboard Pasien</h1>
+        <p class="lead">Halo {{ pasien.nama }}, selamat datang di sistem diagnosis stunting.</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#4CAF50" class="bi bi-clipboard-data" viewBox="0 0 16 16">
+                        <path d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zm-5 2a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0V9zm4-4a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V6a1 1 0 0 1 1-1zM2 1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V1zm2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H4z"/>
+                    </svg>
+                </div>
+                <h5 class="card-title">Diagnosis Stunting</h5>
+                <p class="card-text">Lakukan diagnosis stunting untuk balita/anak Anda berdasarkan gejala yang diamati.</p>
+                <a href="{% url 'form_diagnosa' %}" class="btn btn-primary">Mulai Diagnosis</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#4CAF50" class="bi bi-rulers" viewBox="0 0 16 16">
+                        <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5.5a2.5 2.5 0 0 0 0-5H1v-1h5.5a2.5 2.5 0 0 0 0-5H1V1h6.5A2.5 2.5 0 0 1 10 3.5V7a.5.5 0 0 1-1 0V3.5a1.5 1.5 0 1 0-3 0V7a.5.5 0 0 1-1 0V3.5a1.5 1.5 0 0 0-3 0V7a.5.5 0 0 1-1 0V1zm14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-6a1 1 0 0 1 0-2h5V3H9.5a2.5 2.5 0 0 1 0-5H14a1 1 0 0 1 1 1z"/>
+                    </svg>
+                </div>
+                <h5 class="card-title">Pengukuran Fisik</h5>
+                <p class="card-text">Input data pengukuran fisik dan lihat riwayat pertumbuhan anak Anda.</p>
+                <a href="{% url 'input_pengukuran' %}" class="btn btn-primary">Input Pengukuran</a>
+                <a href="{% url 'tampilkan_grafik_riwayat' pasien.id %}" class="btn btn-outline-secondary mt-2">Lihat Grafik</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#4CAF50" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                </div>
+                <h5 class="card-title">Profil Akun</h5>
+                <p class="card-text">Kelola informasi pribadi dan ubah kata sandi Anda.</p>
+                <a href="{% url 'edit_akun_pasien' %}" class="btn btn-primary">Edit Profil</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section Edukasi Video -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card" style="max-width: 750px; margin: 0 auto;">
+            <div class="card-header">
+                <h5 class="mb-0">Video Edukasi tentang Stunting</h5>
+            </div>
+            <div class="card-body">
+                <div class="ratio ratio-16x9">
+                    <iframe src="{% static 'core/video/edukasi_stunting.mp4' %}" title="Video Edukasi Stunting" allowfullscreen></iframe>
+                </div>
+                <div class="mt-3">
+                    {% comment %} <p>Video ini menjelaskan apa itu stunting, bagaimana cara mencegahnya, dan pentingnya deteksi dini untuk pertumbuhan optimal anak.</p> {% endcomment %}
+                    <p class="text-muted"><small>Sumber:Jurusan Gizi, Politeknik Kesehatan Bandung, Kementerian Kesehatan RI</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section Informasi Stunting -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Informasi Lengkap tentang Stunting</h5>
+            </div>
+            <div class="card-body">
+                <h5>Apa itu Stunting?</h5>
+                <p>Stunting adalah kondisi gagal tumbuh pada anak balita yang ditandai dengan tinggi badan anak lebih pendek dibandingkan anak seusianya. Kondisi ini terjadi akibat kurang gizi kronis, terutama pada 1000 hari pertama kehidupan (HPK) sejak konsepsi hingga usia 2 tahun.</p>
+                
+                <h5>Penyebab Stunting</h5>
+                <p>Faktor-faktor yang menyebabkan stunting antara lain:</p>
+                <ul>
+                    <li>Kurang gizi ibu selama kehamilan</li>
+                    <li>Kurang ASI eksklusif pada 6 bulan pertama</li>
+                    <li>Pola makan tidak seimbang setelah 6 bulan</li>
+                    <li>Sanitasi dan kebersihan yang buruk</li>
+                    <li>Infeksi berulang seperti diare dan ISPA</li>
+                </ul>
+                
+                <h5>Dampak Stunting</h5>
+                <p>Anak yang mengalami stunting dapat mengalami berbagai dampak jangka panjang, antara lain:</p>
+                <ul>
+                    <li>Hambatan perkembangan kognitif dan kemampuan belajar</li>
+                    <li>Daya tahan tubuh yang rendah</li>
+                    <li>Risiko lebih tinggi terkena penyakit kronis di masa dewasa</li>
+                    <li>Potensi ekonomi yang terbatas di masa depan</li>
+                </ul>
+                
+                <h5>Pencegahan Stunting</h5>
+                <p>Pencegahan stunting harus dimulai sejak dini dan melibatkan berbagai pihak:</p>
+                <ul>
+                    <li>Memastikan ibu hamil mendapat asupan gizi yang cukup</li>
+                    <li>Pemberian ASI eksklusif selama 6 bulan</li>
+                    <li>Pemberian MPASI yang bergizi seimbang</li>
+                    <li>Menjaga sanitasi dan kebersihan lingkungan</li>
+                    <li>Imunisasi lengkap sesuai jadwal</li>
+                    <li>Pemeriksaan kesehatan rutin di Posyandu</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Profil Pasien -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Profil Pasien</h5>
+                    <a href="{% url 'edit_akun_pasien' %}" class="btn btn-sm btn-outline-primary">Edit Profil</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Nama:</strong> {{ pasien.nama }}</p>
+                        <p><strong>Jenis Kelamin:</strong> {{ pasien.get_jenisKelamin_display }}</p>
+                        <p><strong>Tanggal Lahir:</strong> {{ pasien.tanggalLahir }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Nama Wali:</strong> {{ pasien.namaWali|default:"-" }}</p>
+                        <p><strong>Nomor Telepon:</strong> {{ pasien.nomorTelepon|default:"-" }}</p>
+                        <p><strong>Nama Pengguna:</strong> {{ pasien.namaPengguna }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

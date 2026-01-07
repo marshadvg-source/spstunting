@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">{{ page_title }}</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Kelompok Aturan: <strong>{{ kondisi.kodeKondisi }} - {{ kondisi.namaKondisi }}</strong></p>
+                    <hr>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        {% if rule_groups %}
+                            {% for kode_kelompok, aturan_list in rule_groups.items %}
+                            <div class="rule-group mb-4 p-3 border rounded">
+                                <input type="hidden" name="rule_group_{{ forloop.counter0 }}" value="1">
+                                <h5>Kelompok Aturan: {{ kode_kelompok }}</h5>
+                                <div class="mb-3">
+                                    <label for="kode_kelompok_{{ forloop.counter0 }}" class="form-label">Kode Kelompok Aturan</label>
+                                    <input type="text" class="form-control" id="kode_kelompok_{{ forloop.counter0 }}" name="kode_kelompok_{{ forloop.counter0 }}" value="{{ kode_kelompok }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Gejala dalam Kelompok Ini:</label>
+                                    <div>
+                                        {% for gejala in gejala_list %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                    name="gejala_{{ forloop.parentloop.counter0 }}" 
+                                                    value="{{ gejala.kodeGejala }}" 
+                                                    id="gejala_{{ forloop.parentloop.counter0 }}_{{ forloop.counter0 }}"
+                                                    {% for aturan in aturan_list %}{% if aturan.gejala.kodeGejala == gejala.kodeGejala %}checked{% endif %}{% endfor %}>
+                                                <label class="form-check-label" for="gejala_{{ forloop.parentloop.counter0 }}_{{ forloop.counter0 }}">
+                                                    {{ gejala.kodeGejala }} - {{ gejala.namaGejala }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="rule-group mb-4 p-3 border rounded">
+                                <input type="hidden" name="rule_group_0" value="1">
+                                <h5>Kelompok Aturan Baru</h5>
+                                <div class="mb-3">
+                                    <label for="kode_kelompok_0" class="form-label">Kode Kelompok Aturan</label>
+                                    <input type="text" class="form-control" id="kode_kelompok_0" name="kode_kelompok_0" value="R01">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Pilih Gejala:</label>
+                                    <div>
+                                        {% for gejala in gejala_list %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                    name="gejala_0" 
+                                                    value="{{ gejala.kodeGejala }}" 
+                                                    id="gejala_0_{{ forloop.counter0 }}">
+                                                <label class="form-check-label" for="gejala_0_{{ forloop.counter0 }}">
+                                                    {{ gejala.kodeGejala }} - {{ gejala.namaGejala }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="d-flex justify-content-end mt-4">
+                            <a href="{% url 'list_rules_pakar' %}" class="btn btn-secondary me-2">Batal</a>
+                            <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

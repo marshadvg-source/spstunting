@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Form Diagnosis Stunting - Sistem Diagnosis Stunting{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Form Diagnosis Stunting</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard_pasien' %}">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Diagnosis Stunting</li>
+            </ol>
+        </nav>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5>Pilih Gejala yang Dialami</h5>
+                <p class="mb-0">Silakan centang gejala yang sesuai dengan kondisi balita/anak Anda saat ini.</p>
+            </div>
+            <div class="card-body">
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        {% for gejala in gejala_list %}
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input diagnosis-checkbox" type="checkbox" name="gejala" value="{{ gejala.kodeGejala }}" id="gejala_{{ gejala.kodeGejala }}">
+                                        <label class="form-check-label fw-bold" for="gejala_{{ gejala.kodeGejala }}">
+                                            <h6 class="mb-0"><strong>{{ gejala.kodeGejala }}</strong> - {{ gejala.namaGejala }}</h6>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-12">
+                            <div class="alert alert-info">
+                                Tidak ada gejala yang tersedia saat ini.
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">Diagnosis Sekarang</button>
+                        <a href="{% url 'dashboard_pasien' %}" class="btn btn-secondary">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

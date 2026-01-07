@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Daftar Gejala - Panel Pakar{% endblock %}
+
+{% block content %}
+{% comment %} Header is defined in base.html and populated via context variables {% endcomment %}
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Daftar Gejala</h5>
+        <a href="{% url 'create_gejala_pakar' %}" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle me-1" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+            Tambah Gejala Baru
+        </a>
+    </div>
+    <div class="card-body">
+        {% if gejala_list %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Kode Gejala</th>
+                        <th>Nama Gejala</th>
+                        <th>Bobot Gejala</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for gejala in gejala_list %}
+                    <tr>
+                        <td>{{ gejala.kodeGejala }}</td>
+                        <td>{{ gejala.namaGejala }}</td>
+                        <td>{{ gejala.bobotGejala }}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                {% if gejala.kodeGejala %}
+                                <a href="{% url 'edit_gejala_pakar' gejala.kodeGejala %}" class="btn btn-sm btn-outline-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.5 1.5 11.5 3.5 12.5l6.5-6.5z"/>
+                                    </svg>
+                                    Edit
+                                </a>
+                                <a href="{% url 'delete_gejala_pakar' gejala.kodeGejala %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus gejala ini?')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                    </svg>
+                                    Hapus
+                                </a>
+                                {% else %}
+                                <button class="btn btn-sm btn-outline-secondary" disabled>Edit</button>
+                                <button class="btn btn-sm btn-outline-secondary" disabled>Hapus</button>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">Tidak ada gejala yang tersedia</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center">
+            <h5>Tidak ada gejala yang tersedia</h5>
+            <p>Belum ada gejala yang dibuat. Silakan tambahkan gejala baru.</p>
+            <a href="{% url 'create_gejala_pakar' %}" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle me-1" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+                Tambah Gejala Baru
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

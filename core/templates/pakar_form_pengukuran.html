@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">{{ page_title }}</h4>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="pasien" class="form-label">Pasien *</label>
+                                <select class="form-select" id="pasien" name="pasien" required {% if pengukuran %}disabled{% endif %}>
+                                    <option value="">Pilih Pasien</option>
+                                    {% for p in pasien_list %}
+                                    <option value="{{ p.id }}" {% if pengukuran and pengukuran.pasien.id == p.id %}selected{% endif %}>{{ p.nama }} ({{ p.namaPengguna }})</option>
+                                    {% endfor %}
+                                </select>
+                                {% if pengukuran %}
+                                <input type="hidden" name="pasien" value="{{ pengukuran.pasien.id }}">
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="tanggal_ukur" class="form-label">Tanggal Ukur *</label>
+                                <input type="date" class="form-control" id="tanggal_ukur" name="tanggal_ukur" value="{{ pengukuran.tanggalUkur|date:'Y-m-d'|default:'' }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="berat_badan" class="form-label">Berat Badan (kg) *</label>
+                                <input type="number" step="0.01" class="form-control" id="berat_badan" name="berat_badan" value="{{ pengukuran.beratBadan|default:'' }}" required>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="tinggi_badan" class="form-label">Tinggi/Panjang Badan (cm) *</label>
+                                <input type="number" step="0.01" class="form-control" id="tinggi_badan" name="tinggi_badan" value="{{ pengukuran.tinggiBadan|default:'' }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="lingkar_kepala" class="form-label">Lingkar Kepala (cm)</label>
+                                <input type="number" step="0.01" class="form-control" id="lingkar_kepala" name="lingkar_kepala" value="{{ pengukuran.lingkarKepala|default:'' }}">
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="lingkar_lengan" class="form-label">Lingkar Lengan Atas (cm)</label>
+                                <input type="number" step="0.01" class="form-control" id="lingkar_lengan" name="lingkar_lengan" value="{{ pengukuran.lingkarLengan|default:'' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="imunisasi" class="form-label">Status Imunisasi</label>
+                            <input type="text" class="form-control" id="imunisasi" name="imunisasi" value="{{ pengukuran.imunisasi|default:'' }}">
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'list_pengukuran_pakar' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save"></i> Simpan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

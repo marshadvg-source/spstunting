@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Preview Laporan Diagnosis - Sistem Diagnosis Stunting{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Preview Laporan Diagnosis</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard_pasien' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'form_diagnosa' %}">Diagnosis Stunting</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'tampilkan_hasil_diagnosa' konsultasi_id=konsultasi.id %}">Hasil Diagnosis</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Preview Laporan</li>
+            </ol>
+        </nav>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Preview Laporan Diagnosis Stunting</h5>
+                    <a href="{% url 'cetak_hasil_diagnosa_pdf' konsultasi_id=konsultasi.id %}" class="btn btn-danger">
+                        <i class="fas fa-file-pdf"></i> Cetak PDF
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Berikut adalah preview laporan diagnosis stunting. Klik tombol "Cetak PDF" di pojok kanan atas untuk mencetak laporan resmi.
+                </div>
+                
+                <div class="border p-3 bg-light">
+                    <h3 class="text-center mb-4">SURAT KETERANGAN HASIL DIAGNOSA STUNTING</h3>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><strong>Nama Anak:</strong> {{ konsultasi.pasien.nama }}</p>
+                            <p><strong>Jenis Kelamin:</strong> {{ konsultasi.pasien.get_jenisKelamin_display }}</p>
+                            <p><strong>Nama Orang Tua:</strong> {{ konsultasi.pasien.namaWali }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Tanggal Lahir:</strong> {{ konsultasi.pasien.tanggalLahir|date:"d/m/Y" }}</p>
+                            <p><strong>Usia:</strong> {{ konsultasi.pasien.usia_sekarang }} bulan</p>
+                            <p><strong>Tanggal Diagnosis:</strong> {{ konsultasi.tanggalKonsultasi|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center p-3 mb-4 {% if konsultasi.hasilKondisi.namaKondisi == 'Normal' %}bg-success text-white{% elif konsultasi.hasilKondisi.namaKondisi == 'Risiko Stunting' %}bg-warning text-dark{% elif konsultasi.hasilKondisi.namaKondisi == 'Stunting' %}bg-danger text-white{% else %}bg-secondary text-dark{% endif %}">
+                        <h4>HASIL DIAGNOSIS</h4>
+                        <h2>{{ konsultasi.hasilKondisi.namaKondisi|default:"Tidak Diketahui" }}</h2>
+                        <p>Berdasarkan hasil analisis sistem pakar, kondisi pertumbuhan anak saat ini adalah <strong>{{ konsultasi.hasilKondisi.namaKondisi|default:"Tidak Diketahui" }}</strong>.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>REKOMENDASI</h5>
+                        <ul>
+                            {% if konsultasi.hasilKondisi.namaKondisi == 'Normal' %}
+                                <li>Pertahankan pola asuh dan asupan gizi yang baik</li>
+                                <li>Lanjutkan pemberian ASI eksklusif sampai usia 6 bulan</li>
+                                <li>Berikan MP-ASI yang bergizi seimbang mulai usia 6 bulan</li>
+                                <li>Jaga kebersihan dan lakukan stimulasi tumbuh kembang secara rutin</li>
+                                <li>Lakukan pengukuran pertumbuhan secara berkala setiap bulan</li>
+                            {% elif konsultasi.hasilKondisi.namaKondisi == 'Risiko Stunting' %}
+                                <li>Segera konsultasikan dengan tenaga kesehatan terdekat</li>
+                                <li>Tingkatkan frekuensi dan kualitas pemberian makan</li>
+                                <li>Berikan suplemen gizi sesuai anjuran dokter</li>
+                                <li>Pastikan anak mendapat ASI eksklusif dan MP-ASI yang cukup</li>
+                                <li>Pantau pertumbuhan anak secara intensif setiap 2 minggu sekali</li>
+                            {% elif konsultasi.hasilKondisi.namaKondisi == 'Stunting' %}
+                                <li>Segera bawa anak ke fasilitas kesehatan untuk penanganan lebih lanjut</li>
+                                <li>Ikuti program intervensi gizi khusus dari tenaga kesehatan</li>
+                                <li>Berikan makanan tambahan dengan kualitas dan kuantitas yang lebih tinggi</li>
+                                <li>Pastikan anak mendapat suplemen gizi dan vitamin sesuai rekomendasi</li>
+                                <li>Lakukan monitoring tumbuh kembang secara ketat bersama tenaga kesehatan</li>
+                            {% else %}
+                                <li>Segera konsultasikan dengan tenaga kesehatan terdekat</li>
+                                <li>Lakukan pemeriksaan lebih lanjut untuk memastikan kondisi anak</li>
+                                <li>Ikuti program intervensi gizi dari tenaga kesehatan</li>
+                                <li>Berikan asupan gizi yang cukup dan seimbang</li>
+                                <li>Pantau pertumbuhan anak secara rutin</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>CATATAN MEDIS</h5>
+                        <p>{{ konsultasi.catatan }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

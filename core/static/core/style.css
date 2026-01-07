@@ -1,0 +1,325 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 60px;
+    background-color: #f8f9fa;
+}
+
+/* Login Page Specific Styles */
+body.login-body {
+    background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+
+/* Expert Login Page Specific Styles */
+body.expert-login-body {
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.navbar {
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #43A047, #1B5E20);
+}
+
+.footer {
+    margin-top: 50px;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    background-color: #ffffff;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,.15);
+}
+
+.section-spacing {
+    margin: 30px 0;
+}
+
+/* Reduce header sizes in content area */
+.container h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.875rem;
+}
+
+.container h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.container h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.625rem;
+}
+
+/* Login and Registration Page Specific Styles */
+.login-container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    overflow: hidden;
+    width: 100%;
+    max-width: 900px; /* Wider for expert login */
+    margin: 0 auto;
+}
+
+.patient-login-container {
+    max-width: 450px; /* Narrower width for patient login */
+}
+
+.register-container {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.login-left {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-right {
+    padding: 40px;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    border-radius: 15px 15px 0 0 !important;
+    text-align: center;
+    padding: 20px;
+}
+
+.logo {
+    font-weight: 700;
+    color: #2E7D32;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo span {
+    color: #4CAF50;
+}
+
+.tagline {
+    font-weight: 300;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+.form-control:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+}
+
+.form-select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.form-select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+}
+
+.btn-login {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 500;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background: linear-gradient(135deg, #43A047, #1B5E20);
+}
+
+.illustration {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.illustration img {
+    max-width: 100%;
+    height: auto;
+}
+
+.welcome-text {
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-weight: 300;
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+.section-title {
+    border-bottom: 2px solid #E8F5E9;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #2E7D32;
+}
+
+/* Diagnosis Form Specific Styles */
+.diagnosis-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.diagnosis-card:hover {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+/* Expert Dashboard Styles */
+/*  */
+
+.breadcrumb-custom {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+/* Add styling for breadcrumb items to ensure contrast */
+.dashboard-header .breadcrumb-item a,
+.dashboard-header .breadcrumb-item.active {
+    color: #ffffff !important; /* Force white color */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Add shadow for extra contrast */
+    font-weight: 500; /* Make breadcrumb text slightly bolder */
+}
+
+/* Breadcrumb card with green shadow effect */
+.breadcrumb-card {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    padding: 15px 20px;
+    margin-bottom: 20px;
+}
+
+.breadcrumb-card .breadcrumb {
+    margin-bottom: 0;
+    background-color: transparent;
+    padding: 0;
+}
+
+.breadcrumb-card .breadcrumb-item a {
+    color: #4CAF50 !important; /* Green for links */
+    font-weight: 600;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); /* Add subtle shadow for contrast */
+}
+
+.breadcrumb-card .breadcrumb-item.active {
+    color: #2E7D32 !important; /* Darker green for active item */
+    font-weight: 600;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); /* Add subtle shadow for contrast */
+}
+
+/* Table Styles */
+.table th {
+    font-weight: 600;
+    background-color: #4CAF50; /* Green header background */
+    color: #000000; /* Black text for better contrast */
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(76, 175, 80, 0.05);
+}
+
+/* Enhanced table header contrast */
+.pakar-table thead th {
+    background-color: #2E7D32; /* Darker green for better contrast */
+    color: #000000; /* Black text for better contrast */
+    font-weight: 700;
+    border-bottom: 2px solid #1B5E20;
+}
+
+/* Accordion Styles */
+.accordion-button:not(.collapsed) {
+    background-color: #e8f5e9;
+    color: #2E7D32;
+    font-weight: 500;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+}
+
+.badge.bg-primary {
+    background-color: #4CAF50 !important;
+}
+
+/* Diagnosis Form Checkbox Styling */
+.diagnosis-checkbox:checked {
+    background-color: #4CAF50 !important; /* Green background when checked */
+    border-color: #4CAF50 !important;
+}
+
+.diagnosis-checkbox:checked + .form-check-label {
+    color: #2E7D32; /* Dark green text when checked */
+    font-weight: bold;
+}
+
+.card:hover .diagnosis-checkbox {
+    transform: scale(1.1); /* Slightly enlarge checkbox on card hover */
+    transition: transform 0.2s ease;
+}
